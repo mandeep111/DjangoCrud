@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+{% load static %}
+<html>
+<head>
+    <title>Books App</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+
+<link rel="stylesheet"
+  href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+
+<script
+  src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"></script>
+
+</script>
+<style>
+  .footer {
+   position: -webkit-sticky;
+   left: 0;
+   bottom: 0;
+   width: 100%;
+   text-align: center;
+}
+
+.img-fluid {
+  max-width: 100%;
+  height: auto;
+}
+</style>
+</head>
+<body>
+ 
+    <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
+      <a class="navbar-brand" href="#">Book Management System</a>
+      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarColor01" aria-controls="navbarColor01" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+    
+      <div class="collapse navbar-collapse" id="navbarColor01">
+        <ul class="navbar-nav mr-auto">
+          <li class="nav-item active">
+            <a class="nav-link" href="#">Home <span class="sr-only">(current)</span></a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="#">Features</a>
+          </li>
+        </ul>
+        <form class="form-inline my-2 my-lg-0" style="margin-top: 20px; margin-left: 690px;">
+          <input class="form-control mr-sm-2" type="text" placeholder="Search">
+          <button class="btn btn-secondary my-2 my-sm-0" type="submit">Search</button>
+        </form>
+      </div>
+    </nav>
+<div class="container-fluid">
+  <div class="row"> 
+    
+{% block content %}
+{% for book in shelf %}
+
+<div class="col-sm-3">
+       <div class="thumbnail">
+          <a href="detail/{{book.id}}">
+           <img class="img-fluid" src="{{book.book_image.url}}" style="height: 220px;">
+           <!-- <img src="https://i.ytimg.com/vi/bqUhQpNNHFE/maxresdefault.jpg"> -->
+         </a>
+         <div class="caption" style="text-align: center;">
+          <h3> {{ book.book_name }}</h3>
+         <p > <a href="detail/{{book.id}}" class="btn btn-danger" id = '{{book.id}}'>Details</a></p>
+         </div>
+       </div>
+      
+       </div>
+       
+     
+     
+      {% endfor %}
+    
+    
+      <footer class="footer" style="text-align: right;">
+        <ul class="pagination">
+          {% if shelf.has_previous %}
+          <li class="page-item"> <a class = "page-link" href="?page=1">&laquo; first</a></li>
+          <li class="page-item"><a class="page-link" href="?page={{ shelf.previous_page_number }}">Previous</a></li>
+          {%endif%}
+          <li class="page-item">
+            <span class="page-link">Page {{ shelf.number }} of {{ shelf.paginator.num_pages }}.</span>
+          </li>
+          {%if shelf.has_next %}
+          <li class="page-item"><a class="page-link" href="?page={{ shelf.next_page_number }}">Next</a></li>
+          {%endif%}
+        </ul>
+      </footer>
+      {% endblock %}
+     
+  </div>
+</div>
+
+</body>
+</html>
